@@ -10,16 +10,25 @@ interface AudioSamplePlayerProps {
   durationLabel?: string;
 }
 
+function formatTime(seconds: number): string {
+  if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s.toString().padStart(2, "0")}`;
+}
+
 export function AudioSamplePlayer({
   src,
   title = "AI架電サンプル音声",
   subtitle = "受付突破からアポ取得までを実演",
-  durationLabel = "約30秒",
+  durationLabel,
 }: AudioSamplePlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isAvailable, setIsAvailable] = useState(true);
+  const [duration, setDuration] = useState<number | null>(null);
+  const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -30,6 +39,7 @@ export function AudioSamplePlayer({
     }
 
     const onTime = () => {
+      setCurrentTime(audio.currentTime);
       if (audio.duration > 0) {
         setProgress((audio.currentTime / audio.duration) * 100);
       }
@@ -37,6 +47,7 @@ export function AudioSamplePlayer({
     const onEnd = () => {
       setIsPlaying(false);
       setProgress(0);
+      setCurrentTime(0);
     };
     const onError = () => {
       setIsAvailable(false);
@@ -45,11 +56,17 @@ export function AudioSamplePlayer({
     const onCanPlay = () => {
       setIsAvailable(true);
     };
+    const onLoadedMetadata = () => {
+      if (Number.isFinite(audio.duration)) {
+        setDuration(audio.duration);
+      }
+    };
 
     audio.addEventListener("timeupdate", onTime);
     audio.addEventListener("ended", onEnd);
     audio.addEventListener("error", onError);
     audio.addEventListener("canplay", onCanPlay);
+    audio.addEventListener("loadedmetadata", onLoadedMetadata);
 
     fetch(src, { method: "HEAD" })
       .then((res) => {
@@ -62,6 +79,7 @@ export function AudioSamplePlayer({
       audio.removeEventListener("ended", onEnd);
       audio.removeEventListener("error", onError);
       audio.removeEventListener("canplay", onCanPlay);
+      audio.removeEventListener("loadedmetadata", onLoadedMetadata);
     };
   }, [src]);
 
@@ -109,10 +127,16 @@ export function AudioSamplePlayer({
               {title}
             </span>
           </div>
-          <div className="text-white/60 text-xs mb-2">
-            {isAvailable ? subtitle : "サンプル音声を準備中です"}
-            {isAvailable && (
-              <span className="ml-2 text-white/40">/ {durationLabel}</span>
+          <div className="text-white/60 text-xs mb-2 flex items-center gap-2">
+            <span className="truncate">
+              {isAvailable ? subtitle : "サンプル音声を準備中です"}
+            </span>
+            {isAvailable && (duration || durationLabel) && (
+              <span className="text-white/40 shrink-0 tabular-nums">
+                {duration
+                  ? `${formatTime(currentTime)} / ${formatTime(duration)}`
+                  : durationLabel}
+              </span>
             )}
           </div>
           {/* Progress Bar */}

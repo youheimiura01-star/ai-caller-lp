@@ -83,10 +83,9 @@ export function HeroSection() {
               className="mt-8"
             >
               <AudioSamplePlayer
-                src="/audio/sample.mp3"
+                src="/audio/sample.m4a"
                 title="AI架電サンプル音声"
-                subtitle="受付突破→担当者接続→アポ取得"
-                durationLabel="約30秒"
+                subtitle="実際のAIによる架電をお聴きいただけます"
               />
             </motion.div>
           </div>

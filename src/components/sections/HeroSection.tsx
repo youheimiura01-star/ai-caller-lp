@@ -3,6 +3,7 @@
 import { motion } from "motion/react";
 import { Phone, Database, CalendarCheck, Zap } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { AudioSamplePlayer } from "@/components/ui/AudioSamplePlayer";
 
 export function HeroSection() {
   return (
@@ -72,6 +73,21 @@ export function HeroSection() {
               <Button variant="outline" size="lg" href="#pricing">
                 料金プランを見る
               </Button>
+            </motion.div>
+
+            {/* AI Audio Sample Player */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.0 }}
+              className="mt-8"
+            >
+              <AudioSamplePlayer
+                src="/audio/sample.mp3"
+                title="AI架電サンプル音声"
+                subtitle="受付突破→担当者接続→アポ取得"
+                durationLabel="約30秒"
+              />
             </motion.div>
           </div>
 

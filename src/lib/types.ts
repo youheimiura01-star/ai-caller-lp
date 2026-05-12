@@ -34,3 +34,15 @@ export interface NavLink {
   href: string;
   label: string;
 }
+
+export interface CaseStudy {
+  id: string;
+  industry: string;
+  target: string;
+  metricLabel: string;
+  metricValue: string;
+  detail: string;
+  cost: string;
+  costSuffix: string;
+  accent: "purple" | "blue" | "teal";
+}

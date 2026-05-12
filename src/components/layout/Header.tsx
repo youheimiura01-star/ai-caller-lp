@@ -7,7 +7,15 @@ import { NAV_LINKS } from "@/lib/constants";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { Button } from "@/components/ui/Button";
 
-const sectionIds = ["services", "results", "pricing", "flow", "faq", "contact"];
+const sectionIds = [
+  "services",
+  "results",
+  "cases",
+  "pricing",
+  "flow",
+  "faq",
+  "contact",
+];
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);

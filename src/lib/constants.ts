@@ -1,8 +1,16 @@
-import type { NavLink, Service, Stat, PricingPlan, FaqItem } from "./types";
+import type {
+  NavLink,
+  Service,
+  Stat,
+  PricingPlan,
+  FaqItem,
+  CaseStudy,
+} from "./types";
 
 export const NAV_LINKS: NavLink[] = [
   { href: "#services", label: "サービス特長" },
   { href: "#results", label: "数字で見る強み" },
+  { href: "#cases", label: "成果イメージ" },
   { href: "#pricing", label: "料金プラン" },
   { href: "#flow", label: "導入の流れ" },
   { href: "#faq", label: "よくある質問" },
@@ -141,6 +149,42 @@ export const PRICING_PLANS: PricingPlan[] = [
     ],
     isPopular: false,
     ctaText: "個別相談を申し込む",
+  },
+];
+
+export const CASE_STUDIES: CaseStudy[] = [
+  {
+    id: "case-jinzai",
+    industry: "人材紹介会社 C社",
+    target: "人事の責任者宛て",
+    metricLabel: "アポ取得率",
+    metricValue: "0.4%",
+    detail: "250コールで1アポ取得",
+    cost: "約7,500円",
+    costSuffix: "1アポあたり",
+    accent: "purple",
+  },
+  {
+    id: "case-sales",
+    industry: "営業支援会社 A社",
+    target: "中小企業の社長宛て",
+    metricLabel: "リード取得率",
+    metricValue: "0.12%",
+    detail: "830コールで1リード取得",
+    cost: "約25,000円",
+    costSuffix: "1リードあたり",
+    accent: "blue",
+  },
+  {
+    id: "case-utility",
+    industry: "光熱費削減会社 E社",
+    target: "店舗の責任者宛て",
+    metricLabel: "リード取得率",
+    metricValue: "0.3%",
+    detail: "330コールで1リード取得",
+    cost: "約9,900円",
+    costSuffix: "1リードあたり",
+    accent: "teal",
   },
 ];
 
